@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "divisons")
+@Table(name = "divisions")
 @Getter
 @Setter
 

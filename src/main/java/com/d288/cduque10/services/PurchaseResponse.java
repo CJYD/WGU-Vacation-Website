@@ -8,8 +8,4 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class PurchaseResponse {
-
-    private final String orderTrackingNumber;
-
-}
+public class PurchaseResponse { private final String orderTrackingNumber; }
