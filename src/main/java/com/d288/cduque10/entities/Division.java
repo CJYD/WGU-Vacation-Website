@@ -48,17 +48,4 @@ public class Division {
         this.countryID = (country != null) ? country.getId() : null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Division)) return false;
-
-        Division division = (Division) o;
-
-        return Objects.equals(id, division.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

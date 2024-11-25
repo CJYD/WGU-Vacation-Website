@@ -4,6 +4,6 @@ public enum StatusType {
 
     pending,
     ordered,
-    cancelled
+    canceled
 
 }

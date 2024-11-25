@@ -47,20 +47,7 @@ public class Vacation {
     @Column(name = "last_update")
     private Date last_update;
 
-    @OneToMany(mappedBy = "vacation")
+    @OneToMany(mappedBy = "vacation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Excursion> excursions;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vacation)) return false;
-
-        Vacation vacation = (Vacation) o;
-
-        return Objects.equals(id, vacation.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

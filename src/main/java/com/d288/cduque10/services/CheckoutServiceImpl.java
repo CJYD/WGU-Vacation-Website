@@ -14,46 +14,88 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private CustomerRepository customerRepository;
     private CartRepository cartRepository;
+    private ExcursionRepository excursionRepository;
     private CartItemRepository cartItemRepository;
 
     public CheckoutServiceImpl (
             CustomerRepository customerRepository,
             CartRepository cartRepository,
+            ExcursionRepository excursionRepository,
             CartItemRepository cartItemRepository
+
     ) {
         this.customerRepository = customerRepository;
         this.cartRepository = cartRepository;
+        this.excursionRepository = excursionRepository;
         this.cartItemRepository = cartItemRepository;
     }
 
     @Override
     @Transactional
 
-    public PurchaseResponse placeOrder(Purchase purchase) {
+    /* public PurchaseResponse placeOrder(Purchase purchase) {
 
         Cart cart = purchase.getCart();
 
-        String orderTrackingNumber = generateOrderTrackingNumber();
-        cart.setOrderTrackingNumber(orderTrackingNumber);
+        Customer customer = purchase.getCustomer();
 
         Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(item -> item.setCart(cart));
-        cartItems.forEach(item -> cart.add(item));
 
-        cart.setStatus(StatusType.ordered);
-        cartRepository.save(cart);
+        cartItems.forEach(item -> {
+            item.setCart(cart);
+            cart.add(item);
+        });
 
-        Customer customer = purchase.getCustomer();
+        String orderTrackingNumber = UUID.randomUUID().toString();
+        cart.setOrderTrackingNumber(orderTrackingNumber);
         customer.add(cart);
+        cart.setStatus(StatusType.ordered);
+
+        cartRepository.save(cart);
+        customerRepository.save(customer);
 
         return new PurchaseResponse(orderTrackingNumber);
     }
 
-    private String generateOrderTrackingNumber() {
+     */
+    // Adding validation for empty cart
 
-        return UUID.randomUUID().toString();
+    public PurchaseResponse placeOrder(Purchase purchase) {
+
+        try {
+            Cart cart = purchase.getCart();
+
+            String orderTrackingNumber = generateOTN();
+            cart.setOrderTrackingNumber(orderTrackingNumber);
+
+            Set<CartItem> cartItems = purchase.getCartItems();
+            cartItems.forEach(item -> item.setCart(cart));
+
+            cart.setCartItem(cartItems);
+
+            Customer customer = purchase.getCustomer();
+            cart.setCustomer(customer);
+
+            customerRepository.save(customer);
+            cartRepository.save(cart);
+            customer.add(cart);
+
+            cart.setStatus(StatusType.ordered);
+
+            if (customer == null || cartItems.isEmpty()) {
+                throw new IllegalArgumentException("Customer or cart cannot be empty.");
+            }
+
+            return new PurchaseResponse(orderTrackingNumber);
+        } catch (Exception e) {
+            return new PurchaseResponse(e.getMessage());
+        }
+
+
     }
 
-
+    private String generateOTN() {
+        return UUID.randomUUID().toString();
+    }
 
 }

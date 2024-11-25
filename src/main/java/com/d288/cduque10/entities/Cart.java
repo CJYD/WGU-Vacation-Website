@@ -22,7 +22,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private Long id;
+    private Long cart_id;
 
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
@@ -52,21 +52,25 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CartItem> cartItem = new HashSet<>();
 
-    public void add(CartItem cartItem) {
-        this.cartItem.add(cartItem);
+    public Cart() {
+
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cart)) return false;
-
-        Cart cart = (Cart) o;
-
-        return Objects.equals(id, cart.id);
+    public void add(CartItem item) {
+        if(item != null) {
+            if(cartItem == null) {
+                cartItem = new HashSet<>();
+            }
+            cartItem.add(item);
+            item.setCart(this);
+        }
     }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setOrderTrackingNumber (String orderTrackingNumber) {
+        this.orderTrackingNumber = orderTrackingNumber;
     }
+
+    public void setStatus(StatusType orderStatus) {
+        this.status = orderStatus;
+    }
+
 }

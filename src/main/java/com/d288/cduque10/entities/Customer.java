@@ -27,29 +27,29 @@ public class Customer {
 
     @NotBlank(message = "First name is mandatory")
     @NonNull
-    @Column(name = "customer_first_name")
+    @Column(name = "customer_first_name", nullable = false)
     private String firstName;
 
     @NotBlank(message = "Last name is mandatory")
     @NonNull
-    @Column(name = "customer_last_name")
+    @Column(name = "customer_last_name", nullable = false)
     private String lastName;
 
     @NotBlank(message = "Address is mandatory")
     @NonNull
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
     @NotBlank(message = "Postal code is mandatory")
-    @Column(name = "postal_code")
+    @Column(name = "postal_code", nullable = false)
     private String postal_code;
 
     @NotBlank(message = "Phone number is mandatory")
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @CreationTimestamp
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     private Date create_date;
 
     @UpdateTimestamp
@@ -60,8 +60,8 @@ public class Customer {
     @JoinColumn(name = "division_id")
     private Division division;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Cart> carts;
+    @OneToMany(mappedBy = "cart_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Cart> carts = new HashSet<>();
 
     public Customer() {}
 
@@ -96,17 +96,4 @@ public class Customer {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-
-        Customer customer = (Customer) o;
-
-        return Objects.equals(id, customer.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

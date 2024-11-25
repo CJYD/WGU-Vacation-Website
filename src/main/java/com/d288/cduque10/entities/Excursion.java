@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,24 +41,11 @@ public class Excursion {
     @Column(name = "last_update")
     private Date last_update;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacation_id")
     private Vacation vacation;
 
-    @ManyToMany(mappedBy = "excursions")
-    private Set<CartItem> cartItems;
+    @ManyToMany(mappedBy = "excursions", cascade = CascadeType.ALL)
+    private Set<CartItem> cartItems = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Excursion)) return false;
-
-        Excursion excursion = (Excursion) o;
-
-        return Objects.equals(id, excursion.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

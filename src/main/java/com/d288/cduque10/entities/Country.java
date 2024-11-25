@@ -34,17 +34,7 @@ public class Country {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Division> divisions;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Country)) return false;
-
-        Country country = (Country) o;
-
-        return Objects.equals(id, country.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public Long getId() {
+        return this.id;
     }
 }
