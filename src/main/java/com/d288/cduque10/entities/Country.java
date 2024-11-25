@@ -1,20 +1,17 @@
 package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "countries")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class Country {
 
@@ -36,4 +33,18 @@ public class Country {
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Division> divisions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Country)) return false;
+
+        Country country = (Country) o;
+
+        return Objects.equals(id, country.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

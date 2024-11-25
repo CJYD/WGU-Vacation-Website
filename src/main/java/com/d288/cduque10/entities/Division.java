@@ -1,22 +1,19 @@
 package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "divisons")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class Division {
 
@@ -49,5 +46,19 @@ public class Division {
     public void setCountry(Country country) {
         this.country = country;
         this.countryID = (country != null) ? country.getId() : null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Division)) return false;
+
+        Division division = (Division) o;
+
+        return Objects.equals(id, division.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,23 +1,20 @@
 package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "excursions")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class Excursion {
 
@@ -50,4 +47,17 @@ public class Excursion {
     @ManyToMany(mappedBy = "excursions")
     private Set<CartItem> cartItems;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Excursion)) return false;
+
+        Excursion excursion = (Excursion) o;
+
+        return Objects.equals(id, excursion.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

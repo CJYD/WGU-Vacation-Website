@@ -1,22 +1,19 @@
 package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "cart_items")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class CartItem {
 
@@ -44,4 +41,18 @@ public class CartItem {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartItem)) return false;
+
+        CartItem cartItem = (CartItem) o;
+
+        return Objects.equals(id, cartItem.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

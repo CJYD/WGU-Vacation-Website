@@ -2,9 +2,7 @@ package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.NonNull;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,14 +10,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "customers")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class Customer {
 
@@ -97,5 +94,19 @@ public class Customer {
             carts.add(cart);
             cart.setCustomer(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        Customer customer = (Customer) o;
+
+        return Objects.equals(id, customer.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
