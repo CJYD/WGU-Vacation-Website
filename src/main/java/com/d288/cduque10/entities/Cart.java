@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import java.util.UUID;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -46,15 +46,11 @@ public class Cart {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<CartItem> cartItem = new HashSet<>();
-
-    public Cart() {
-
-    }
 
     public void add(CartItem item) {
         if(item != null) {
@@ -65,12 +61,4 @@ public class Cart {
             item.setCart(this);
         }
     }
-    public void setOrderTrackingNumber (String orderTrackingNumber) {
-        this.orderTrackingNumber = orderTrackingNumber;
-    }
-
-    public void setStatus(StatusType orderStatus) {
-        this.status = orderStatus;
-    }
-
 }

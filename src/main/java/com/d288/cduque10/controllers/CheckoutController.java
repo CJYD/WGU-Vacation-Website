@@ -1,29 +1,28 @@
 package com.d288.cduque10.controllers;
 
 import com.d288.cduque10.services.*;
-import jakarta.validation.Valid;
-import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/checkout")
-@CrossOrigin("http://localhost:4200")
 
 public class CheckoutController {
 
     private CheckoutService checkoutService;
 
+    @Autowired
     public CheckoutController(CheckoutService checkoutService) {
         this.checkoutService = checkoutService;
     }
 
     @PostMapping("/purchase")
 
-    public PurchaseResponse placeOrder(@RequestBody @Valid Purchase purchase) {
+    public PurchaseResponse placeOrder(@RequestBody Purchase purchase) {
 
-        PurchaseResponse savedResponse = checkoutService.placeOrder(purchase);
+        PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
 
-        return savedResponse;
+        return purchaseResponse;
     }
 }

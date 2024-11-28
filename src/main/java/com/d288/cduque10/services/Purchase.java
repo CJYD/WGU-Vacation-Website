@@ -8,14 +8,13 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Getter
 @Setter
-
 public class Purchase {
 
     private Customer customer;
+    private String address;
     private Cart cart;
-    private Set<CartItem> cartItems = new HashSet<>();
-    private Set<Excursion> excursions = new HashSet<>();
+    private Set<CartItem> cartItems;
+
 }

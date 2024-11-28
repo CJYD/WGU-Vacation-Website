@@ -1,20 +1,18 @@
 package com.d288.cduque10.services;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
-@Data
+import lombok.Data;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
 @Getter
 @Setter
-
-
+@Data
 public class PurchaseResponse {
-
+    @NonNull
     private String orderTrackingNumber;
 
-    public PurchaseResponse(String orderTrackingNumber) {
-        this.orderTrackingNumber = orderTrackingNumber;
-    }
 }

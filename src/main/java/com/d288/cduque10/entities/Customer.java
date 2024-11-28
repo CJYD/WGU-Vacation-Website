@@ -60,31 +60,8 @@ public class Customer {
     @JoinColumn(name = "division_id")
     private Division division;
 
-    @OneToMany(mappedBy = "cart_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart_id", cascade = CascadeType.ALL)
     private Set<Cart> carts = new HashSet<>();
-
-    public Customer() {}
-
-    public Customer(Long id,
-                    String firstName,
-                    String lastName,
-                    String address,
-                    String postal_code,
-                    String phone,
-                    Date create_date,
-                    Date last_update,
-                    Division division) {
-
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.postal_code = postal_code;
-        this.phone = phone;
-        this.create_date = create_date;
-        this.last_update = last_update;
-        this.division = division;
-    }
 
     public void add(Cart cart) {
         if (cart != null) {
@@ -95,5 +72,4 @@ public class Customer {
             cart.setCustomer(this);
         }
     }
-
 }

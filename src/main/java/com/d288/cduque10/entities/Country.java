@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,10 +30,6 @@ public class Country {
     @Column(name = "last_update")
     private Date last_update;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private Set<Division> divisions;
-
-    public Long getId() {
-        return this.id;
-    }
 }

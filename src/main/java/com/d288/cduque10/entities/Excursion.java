@@ -1,7 +1,9 @@
 package com.d288.cduque10.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,7 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -17,11 +18,14 @@ import java.util.Set;
 @Getter
 @Setter
 
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Excursion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "excursion_id", nullable = false, updatable = false)
+    @Column(name = "excursion_id", nullable = false)
     private Long id;
 
     @Column(name = "excursion_title")
@@ -41,11 +45,11 @@ public class Excursion {
     @Column(name = "last_update")
     private Date last_update;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacation_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vacation_id", nullable = false)
     private Vacation vacation;
 
-    @ManyToMany(mappedBy = "excursions", cascade = CascadeType.ALL)
-    private Set<CartItem> cartItems = new HashSet<>();
+    @ManyToMany(mappedBy = "excursions")
+    private Set<CartItem> cartitems;
 
 }
